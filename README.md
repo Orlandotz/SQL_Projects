@@ -24,11 +24,11 @@ alter table RealGDP
 add COLUMN DetailLevel  TEXT
 
 ```
-> As the industry names were indented I had to count the number of spaces, and based on the values assign a value for the level with a case statement. 
-> If it has no indentation 0 spaces assign 1 for the value All industry total
-> If it has 2 assign 1.1 for Private industries and Government and government enterprises
-> If it has 4 or 6 assign 1.2 to the industries that belong to Private industries and Government and government enterprises
-> If it has 10 assign 1.3 to a lower level industries: Durable goods manufacturing and Nondurable goods manufacturing that belong to manufacturing
+As the industry names were indented I had to count the number of spaces, and based on the values assign a value for the level with a case statement. 
+> - If it has no indentation 0 spaces assign 1 for the value All industry total
+> - If it has 2 assign 1.1 for Private industries and Government and government enterprises
+> - If it has 4 or 6 assign 1.2 to the industries that belong to Private industries and Government and government enterprises
+> - If it has 10 assign 1.3 to a lower level industries: Durable goods manufacturing and Nondurable goods manufacturing that belong to manufacturing
 
 ```SQL
 update RealGDP
@@ -44,4 +44,10 @@ set DetailLevel =
 		when DetailLevel = 4 then replace(detaillevel,4,1.2)
 		when DetailLevel = 10 then replace(detaillevel,10,1.3)
 	end
+```
+> Triming the Description
+```SQL
+update RealGDP
+set Description = trim(description)
+
 ```
