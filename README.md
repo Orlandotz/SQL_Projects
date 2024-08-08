@@ -3,11 +3,11 @@
 ## Project overview
 Analyze the United Stated quarterly GDP data to determine what industries and states are the strongest from 2028 to 2022. 
 
-## Data Source
+## Data source
 https://www.bea.gov. Interactive data to download the industry quarterly real GDP for the United States and each of the states, including District of Columbia. 
 
 
-## Tools Used
+## Tools ssed
 1. SQLite for data cleaning, preparation and analysis.
 2. Tableau to create a Dashboard.
 
@@ -17,6 +17,7 @@ https://www.bea.gov. Interactive data to download the industry quarterly real GD
 3. Describe the quarterly ecomomic changes: what economies increase or decrease and what industries increase or decrease. 
 
 ## Code
+### Preparing the data
 > Alter the table to add the column DetailLevel that specify the GDP breakdown and different levels. 
 ```SQL
 alter table RealGDP 
