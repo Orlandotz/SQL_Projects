@@ -153,4 +153,130 @@ limit 10
 | Information                                        | 6.09%          |
 | Wholesale trade                                    | 6.01%          |
 | Construction                                       | 4.21%          |
+### What are the top 10 industries that show mor growth after the second quarter of 2020?
 
+```SQL
+WITH quarterlyGDP as (
+select 
+	Area,
+	year,
+	Quarter,
+	Description,
+	RealGDPValue,
+	row_number()over(partition by Area, Description order by year, Quarter) as rn
+	 from QuarterlyRealGDPUSA
+ 
+ )
+ select DISTINCT
+
+	t1.Description,
+	round(coalesce((cast(t1.RealGDPValue as real) - cast(t2.RealGDPValue as real))*1.0/t2.RealGDPValue,0),2) as QuarterlyGrowth
+	
+ from quarterlyGDP t1
+ left join quarterlyGDP t2 on  t1. area = t2.area and t1.Description = t2.Description and t1.rn = t2.rn + 1 
+ 
+	WHERE t1.RealGDPValue <> "(D)" and t1.Area = 'United States' and (t1.year = 2020 and t1.Quarter = 3)
+	
+	order by  QuarterlyGrowth DESC 
+	
+	limit 10;
+ 
+```
+| Description                                                                  | Quarterly Growth (%) |
+|------------------------------------------------------------------------------|-----------------------|
+| Accommodation and food services                                              | 46.00%                |
+| Arts, entertainment, and recreation                                          | 44.00%                |
+| Other services (except government and government enterprises)                | 17.00%                |
+| Health care and social assistance                                            | 16.00%                |
+| Agriculture, forestry, fishing and hunting                                   | 14.00%                |
+| Durable goods manufacturing                                                  | 14.00%                |
+| Manufacturing                                                                | 12.00%                |
+| Transportation and warehousing                                               | 12.00%                |
+| Retail trade                                                                 | 11.00%                |
+| Administrative and support and waste management and remediation services     | 10.00%                |
+
+
+### What are the top 10 economies in the United States and is their GDP percentage of the total US GDP? 
+
+```SQL
+With State_GDP_Percentage as (
+select 
+	year, 
+	Quarter, 
+	Area, 
+	Description,
+	RealGDPValue 
+	from QuarterlyRealGDPUSA
+	where Description =  'All industry total'  and RealGDPValue <> '(D)'
+)
+Select 
+	t1.year,
+	t1.Quarter,
+	t1.Area,
+	t1.RealGDPValue,
+	round(cast(t1.RealGDPValue as real)/Cast(t2.RealGDPValue as real),6) As GDPState_Percentage,
+	rank() over (PARTITION by t1. Quarter, t1.year order by t1.RealGDPValue DESC) as State_Rank
+ 
+from State_GDP_Percentage t1
+
+left join State_GDP_Percentage t2 on t2.year = t1.year and t2.Quarter = t1.Quarter
+
+	Where t1.Area <> 'United States'   and t2.Area = 'United States' and (t1.year = 2020 and t1.Quarter = 3)
+	order by State_Rank ASC
+	limit 10
+
+```
+
+| Year | Quarter | Area        | Real GDP Value | GDPState Percentage | State Rank |
+|------|---------|-------------|----------------|---------------------|------------|
+| 2020 | 3       | California  | 2,962,454.8    | 14.44%              | 1          |
+| 2020 | 3       | Texas       | 1,795,027.9    | 8.75%               | 2          |
+| 2020 | 3       | New York    | 1,659,831.8    | 8.09%               | 3          |
+| 2020 | 3       | Florida     | 1,089,771.4    | 5.31%               | 4          |
+| 2020 | 3       | Illinois    | 818,584.2      | 3.99%               | 5          |
+| 2020 | 3       | Pennsylvania| 744,977.7      | 3.63%               | 6          |
+| 2020 | 3       | Ohio        | 665,995.6      | 3.25%               | 7          |
+| 2020 | 3       | Georgia     | 611,130.1      | 2.98%               | 8          |
+| 2020 | 3       | Washington  | 605,303.3      | 2.95%               | 9          |
+| 2020 | 3       | New Jersey  | 603,345.8      | 2.94%               | 10         |
+
+### What are the top 10 States that show more growth after the second quarter of 2020?
+
+```SQL
+WITH quarterlyGDP as (
+select 
+	Area,
+	year,
+	Quarter,
+	Description,
+	RealGDPValue,
+	row_number()over(partition by Area, Description order by year, Quarter) as rn
+ from QuarterlyRealGDPUSA
+ where Description =  'All industry total' 
+ )
+ select DISTINCT
+	t1.Area,
+	t1.RealGDPValue,
+	round(coalesce((cast(t1.RealGDPValue as real) - cast(t2.RealGDPValue as real))*1.0/t2.RealGDPValue,0),4) as QuarterlyGrowth
+ from quarterlyGDP t1
+
+ left join quarterlyGDP t2 on  t1. area = t2.area and t1.rn = t2.rn + 1 
+
+ WHERE t1.RealGDPValue <> "(D)" AND (t1.year = 2020 and t1.Quarter = 3)
+ 
+ order by   QuarterlyGrowth DESC
+ limit 10;
+```
+
+| Area         | Real GDP Value | Quarterly Growth (%) |
+|--------------|----------------|----------------------|
+| Michigan     | 516,457.6      | 13.13%               |
+| Nevada       | 167,431.3      | 11.94%               |
+| Tennessee    | 373,789.1      | 11.36%               |
+| Indiana      | 367,182.3      | 10.80%               |
+| Idaho        | 85,032.1       | 10.17%               |
+| Vermont      | 32,802.9       | 10.12%               |
+| Kentucky     | 210,998.0      | 10.03%               |
+| New Hampshire| 84,648.7       | 9.84%                |
+| Rhode Island | 59,008.3       | 9.34%                |
+| Montana      | 51,371.4       | 9.25%                |
