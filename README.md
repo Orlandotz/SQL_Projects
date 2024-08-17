@@ -323,7 +323,7 @@ select
 
  from quarterlyGDP t1
  left join quarterlyGDP t2 on  t1. area = t2.area and t1.Description = t2.Description and t1.rn = t2.rn + 1 
-WHERE t1.RealGDPValue <> "(D)" and t1.Area = 'United States'  and (t1.year <> 2018 or t1.quarter <> 1)
+WHERE t1.RealGDPValue <> "(D)" and t1.Area = 'United States'  and (t1.year <> 2018 or t1.quarter <> 1) and year = 2020 
  GROUP by t1.year, t1.Quarter 
   order by t1.year, t1.Quarter 
  ;
@@ -333,29 +333,11 @@ WHERE t1.RealGDPValue <> "(D)" and t1.Area = 'United States'  and (t1.year <> 20
 
 | Year | Quarter | No. of Industries Decreased | No. of Industries Increased |
 |------|---------|-----------------------------|-----------------------------|
-| 2018 | 2       | 5                           | 17                          |
-| 2018 | 3       | 5                           | 17                          |
-| 2018 | 4       | 8                           | 14                          |
-| 2019 | 1       | 12                          | 10                          |
-| 2019 | 2       | 2                           | 20                          |
-| 2019 | 3       | 2                           | 20                          |
-| 2019 | 4       | 6                           | 16                          |
 | 2020 | 1       | 14                          | 8                           |
 | 2020 | 2       | 18                          | 4                           |
 | 2020 | 3       | 1                           | 21                          |
 | 2020 | 4       | 8                           | 14                          |
-| 2021 | 1       | 7                           | 15                          |
-| 2021 | 2       | 4                           | 18                          |
-| 2021 | 3       | 9                           | 13                          |
-| 2021 | 4       | 4                           | 18                          |
-| 2022 | 1       | 11                          | 11                          |
-| 2022 | 2       | 10                          | 12                          |
-| 2022 | 3       | 6                           | 16                          |
-| 2022 | 4       | 4                           | 18                          |
-| 2023 | 1       | 8                           | 14                          |
-| 2023 | 2       | 9                           | 13                          |
-| 2023 | 3       | 8                           | 14                          |
-| 2023 | 4       | 4                           | 18                          |
+
 
 ### How many states have decreaced or increase in percentage from the first quarter of 2018 to the fouth quarter of 2023?
 
@@ -389,7 +371,7 @@ select
 
  from quarterlyGDP t1
  left join quarterlyGDP t2 on  t1. area = t2.area and t1.rn = t2.rn + 1 
-WHERE t1.RealGDPValue <> "(D)" and (t1.year <> 2018 or t1.Quarter <> 1)
+WHERE t1.RealGDPValue <> "(D)" and (t1.year <> 2018 or t1.Quarter <> 1) and t1.year = 2020
 group by t1.year,  t1.Quarter 
 order by t1.year,  t1.Quarter ;
 ```
@@ -398,26 +380,7 @@ order by t1.year,  t1.Quarter ;
 
 | Year | Quarter | No. of States Decreased | No. of States GDP Increased |
 |------|---------|-------------------------|-----------------------------|
-| 2018 | 2       | 10                      | 42                          |
-| 2018 | 3       | 12                      | 40                          |
-| 2018 | 4       | 20                      | 31                          |
-| 2019 | 1       | 16                      | 36                          |
-| 2019 | 2       | 6                       | 44                          |
-| 2019 | 3       | 0                       | 52                          |
-| 2019 | 4       | 9                       | 43                          |
 | 2020 | 1       | 48                      | 4                           |
 | 2020 | 2       | 52                      | 0                           |
 | 2020 | 3       | 0                       | 52                          |
 | 2020 | 4       | 6                       | 45                          |
-| 2021 | 1       | 10                      | 42                          |
-| 2021 | 2       | 4                       | 48                          |
-| 2021 | 3       | 13                      | 39                          |
-| 2021 | 4       | 2                       | 50                          |
-| 2022 | 1       | 32                      | 20                          |
-| 2022 | 2       | 24                      | 28                          |
-| 2022 | 3       | 8                       | 44                          |
-| 2022 | 4       | 10                      | 42                          |
-| 2023 | 1       | 12                      | 40                          |
-| 2023 | 2       | 6                       | 46                          |
-| 2023 | 3       | 0                       | 52                          |
-| 2023 | 4       | 0                       | 52                          |
