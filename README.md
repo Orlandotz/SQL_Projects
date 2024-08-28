@@ -49,7 +49,8 @@ The next table represents the number of undisclosed data group by state and indu
 
 ## Tools used
 1. SQLite for data cleaning, preparation and analysis.
-2. Tableau to create a Dashboard.
+2. Tableau to create a Dashboard:
+   ### https://public.tableau.com/views/Quarterlyeconomyanalysis/Dashboard1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link
 
 ## Exploratory data analysis
 1. What are the top 10 industries in the United States and how they growth after the second quarter of 2020?
