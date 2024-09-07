@@ -1,7 +1,7 @@
 # Data cleaning
 ## Create employment view
 ```SQL
-  CREATE VIEW Employement_View as
+  CREATE VIEW Employment_View as
     SELECT 
         CASE WHEN "2008" IS NOT NULL THEN 2008 END AS Year,
         GeoName AS Area, 
